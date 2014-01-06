@@ -79,9 +79,6 @@
   UIView<NIRecyclableView>* view = [views lastObject];
   if (nil != view) {
     [views removeLastObject];
-    if ([view respondsToSelector:@selector(prepareForReuse)]) {
-      [view prepareForReuse];
-    }
   }
   return view;
 }
@@ -90,6 +87,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)recycleView:(UIView<NIRecyclableView> *)view {
   NIDASSERT([view isKindOfClass:[UIView class]]);
+
+  if ([view respondsToSelector:@selector(prepareForReuse)]) {
+    [view prepareForReuse];
+  }
 
   NSString* reuseIdentifier = nil;
   if ([view respondsToSelector:@selector(reuseIdentifier)]) {
